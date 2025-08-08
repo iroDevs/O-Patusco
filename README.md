@@ -8,7 +8,7 @@ A clínica sofre de problemas com filas de espera longas pelos clientes.
 
 Entram na clínica sem marcação e não conseguimos ter planeamento com médicos a mais e médicos a menos, dependendo das entradas.
 
-Precisamos de um website em Laravel 10/11 e VueJS 3 para:
+Precisamos de um website para:
 - O utente poder agendar marcações
   - Nome da pessoa
   - Email
