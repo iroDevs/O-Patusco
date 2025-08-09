@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generate/"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEDICO
+  RECEPCIONISTA
+  ATENDENTE
+  ADMIN
+}
+
+enum TaskStatus {
+  FINALIZADO
+  PENDENTE
+  CANCELADO
+  FALTANTE
+}
+
+model Client {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  phone       String?
+  name        String
+  type_pet_id Int
+  type_pet    TypePet? @relation(fields: [type_pet_id], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("clients")
+}
+
+model TypePet {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  clients   Client[]
+
+  @@map("type_pets")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  senha     String
+  name      String
+  phone     String?
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus
+  time        DateTime
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("tasks")
+}
