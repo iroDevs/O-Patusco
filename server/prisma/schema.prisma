@@ -37,6 +37,7 @@ model Client {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  tasks      Task[]
   @@map("clients")
 }
 
@@ -67,10 +68,12 @@ model Task {
   id          Int        @id @default(autoincrement())
   title       String
   description String?
+  client_id   Int
   status      TaskStatus
   time        DateTime
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
+  client     Client     @relation(fields: [client_id], references: [id])
   @@map("tasks")
 }
