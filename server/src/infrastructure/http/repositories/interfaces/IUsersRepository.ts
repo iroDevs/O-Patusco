@@ -4,6 +4,6 @@ export default interface IUsersRepository {
   findById(id: number): Promise<OutputUserDto | null>
   findAll(): Promise<OutputUserDto[]>
   create(data: InputUserDto): Promise<OutputUserDto>
-  update(id: string, data: InputUserDto): Promise<OutputUserDto | null>
-  delete(id: string): Promise<void>
+  update(id: number, data: InputUserDto): Promise<OutputUserDto | null>
+  delete(id: number): Promise<void>
 }

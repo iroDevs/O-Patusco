@@ -1,3 +1,6 @@
+import type { InputUserDto, OutputUserDto } from "../http/dtos/users-dto"
+import type IUsersRepository from "../http/repositories/interfaces/IUsersRepository"
+
 export class UserServices {
   constructor(private usersRepository: IUsersRepository) {}
 
