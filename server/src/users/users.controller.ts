@@ -1,13 +1,16 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserInput } from './dto/create-user-dto';
+import { CreateUserInput, CreateUserSchema } from './dto/create-user-dto';
+import { ZodPipe } from '../pipes/zod.pipe';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async createUser(@Body() createUserInput: CreateUserInput) {
+  async createUser(
+    @Body(new ZodPipe(CreateUserSchema)) createUserInput: CreateUserInput,
+  ) {
     return this.usersService.createUser(createUserInput);
   }
 
