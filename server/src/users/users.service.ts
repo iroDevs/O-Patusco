@@ -1,13 +1,13 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { IUsersService } from './interfaces/user-service.interface';
+import { UsersServiceBase } from './interfaces/users-service.base';
 import { CreateUserInput } from './dto/create-user-dto';
 import { IUser } from './interfaces/user.interface';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class UsersService implements IUsersService {
+export class UsersService implements UsersServiceBase {
   constructor(readonly prisma: PrismaService) {}
 
   async createUser(createUserInput: CreateUserInput): Promise<IUser> {
