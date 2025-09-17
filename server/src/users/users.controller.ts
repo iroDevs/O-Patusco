@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { UsersServiceBase } from './interfaces/users-service.base';
 import { CreateUserInput, CreateUserSchema } from './dto/create-user-dto';
 import { ZodPipe } from '../pipes/zod.pipe';
@@ -31,8 +31,9 @@ export class UsersController {
   ) {
     return this.usersService.updateUser(id, updateUserInput);
   }
-
+  //quero que volte status 200 se der certo
   @Post('/login')
+  @HttpCode(200)
   async login(@Body() body: { email: string; senha: string }) {
     return this.usersService.login(body);
   }

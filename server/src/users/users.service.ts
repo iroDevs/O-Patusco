@@ -60,11 +60,11 @@ export class UsersService implements UsersServiceBase {
       where: { email: credentials.email },
     });
     if (!user) {
-      throw new Error('Invalid credentials');
+      throw new ConflictException('Email ou senha inválidos');
     }
     const isPasswordValid = await bcrypt.compare(credentials.senha, user.senha);
     if (!isPasswordValid) {
-      throw new Error('Invalid credentials');
+      throw new ConflictException('Email ou senha inválidos');
     }
     const token = 'token falso'; // Aqui você geraria um token JWT real
     return { token };
