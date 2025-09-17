@@ -21,6 +21,16 @@ enum Role {
   ADMIN
 }
 
+enum PetType {
+  CACHORRO
+  GATO
+  PASSARO
+  REPTIL
+  PEIXE
+  ROEDOR
+  OUTRO
+}
+
 enum TaskStatus {
   FINALIZADO
   PENDENTE
@@ -33,23 +43,29 @@ model Client {
   email       String   @unique
   phone       String?
   name        String
-  type_pet_id Int
-  type_pet    TypePet? @relation(fields: [type_pet_id], references: [id])
+  address     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
+  pets       Pet[]
   tasks      Task[]
+
   @@map("clients")
 }
 
-model TypePet {
+model Pet {
   id        Int      @id @default(autoincrement())
   name      String   @unique
+  type      PetType
+  age       Int
+  description String?
+  image     String?
+  ownerId   Int
+  owner     Client   @relation(fields: [ownerId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  clients   Client[]
 
-  @@map("type_pets")
+
+  @@map("pets")
 }
 
 model User {

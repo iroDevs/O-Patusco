@@ -1,7 +1,15 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { UsersServiceBase } from './interfaces/users-service.base';
 import { CreateUserInput, CreateUserSchema } from './dto/create-user-dto';
-import { ZodPipe } from '../pipes/zod.pipe';
+import { ZodPipe } from '../../pipes/zod.pipe';
 
 @Controller('users')
 export class UsersController {

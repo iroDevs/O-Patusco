@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { UsersServiceBase } from './interfaces/users-service.base';
 import { CreateUserInput } from './dto/create-user-dto';
 import { IUser } from './interfaces/user.interface';
