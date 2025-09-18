@@ -13,4 +13,5 @@ export abstract class UsersServiceBase {
     email: string;
     senha: string;
   }): Promise<{ token: string }>;
+  abstract deleteUser(id: string): Promise<{ message: string }>;
 }

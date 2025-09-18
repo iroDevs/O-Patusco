@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -39,10 +40,15 @@ export class UsersController {
   ) {
     return this.usersService.updateUser(id, updateUserInput);
   }
-  //quero que volte status 200 se der certo
+
   @Post('/login')
   @HttpCode(200)
   async login(@Body() body: { email: string; senha: string }) {
     return this.usersService.login(body);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    return this.usersService.deleteUser(id);
   }
 }

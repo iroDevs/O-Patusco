@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UsersServiceBase } from './interfaces/users-service.base';
-import { CreateUserInput } from './dto/create-user-dto';
+import { CreateUserInput, UpdateUserInput } from './dto/create-user-dto';
 import { IUser } from './interfaces/user.interface';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -44,9 +44,15 @@ export class UsersService implements UsersServiceBase {
   }
   async updateUser(
     id: string,
-    updateUserInput: Partial<CreateUserInput>,
+    updateUserInput: UpdateUserInput,
   ): Promise<IUser> {
     const userId = parseInt(id, 10);
+    const existUserWithEmail = await this.prisma.user.findUnique({
+      where: { email: updateUserInput.email },
+    });
+    if (existUserWithEmail && existUserWithEmail.id !== userId) {
+      throw new ConflictException('Email já cadastrado');
+    }
     return await this.prisma.user.update({
       where: { id: userId },
       data: updateUserInput,
@@ -66,7 +72,15 @@ export class UsersService implements UsersServiceBase {
     if (!isPasswordValid) {
       throw new ConflictException('Email ou senha inválidos');
     }
-    const token = 'token falso'; // Aqui você geraria um token JWT real
+    const token = 'token falso';
     return { token };
+  }
+
+  async deleteUser(id: string): Promise<{ message: string }> {
+    const userId = parseInt(id, 10);
+    await this.prisma.user.delete({
+      where: { id: userId },
+    });
+    return { message: 'Usuário deletado com sucesso' };
   }
 }
